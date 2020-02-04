@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+mongoose.set("useCreateIndex", true);
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const users = require("./routes/user");
