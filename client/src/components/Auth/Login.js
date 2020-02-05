@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
@@ -31,9 +32,18 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/");
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
+    }
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push("/");
     }
   }
 
@@ -49,6 +59,7 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password
     };
+    this.props.loginUser(userData);
   }
 
   render() {
@@ -97,5 +108,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, { loginUser })(
-  withStyles(styles)(Login)
+  withRouter(withStyles(styles)(Login))
 );
