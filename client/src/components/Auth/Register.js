@@ -28,11 +28,19 @@ class Register extends Component {
       email: "",
       username: "",
       password: "",
-      password2: ""
+      password2: "",
+      errors: {}
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -53,6 +61,7 @@ class Register extends Component {
 
   render() {
     const { classes } = this.props;
+    const { errors } = this.state;
     return (
       <Paper style={{ padding: 15 }}>
         <form onSubmit={this.handleSubmit}>
@@ -63,6 +72,8 @@ class Register extends Component {
             value={this.state.email}
             onChange={this.handleChange}
             name="email"
+            helperText={errors.email ? errors.email : ""}
+            error={errors.email ? true : false}
           />
           <TextField
             label="Username"
@@ -71,6 +82,8 @@ class Register extends Component {
             value={this.state.username}
             onChange={this.handleChange}
             name="username"
+            helperText={errors.username ? errors.username : ""}
+            error={errors.username ? true : false}
           />
           <TextField
             label="Password"
@@ -79,6 +92,8 @@ class Register extends Component {
             value={this.state.password}
             onChange={this.handleChange}
             name="password"
+            helperText={errors.password ? errors.password : ""}
+            error={errors.password ? true : false}
           />
           <TextField
             label="Re-enter password"
@@ -87,6 +102,8 @@ class Register extends Component {
             value={this.state.password2}
             onChange={this.handleChange}
             name="password2"
+            helperText={errors.password2 ? errors.password2 : ""}
+            error={errors.password2 ? true : false}
           />
           <div className={classes.btnBlock}>
             {" "}

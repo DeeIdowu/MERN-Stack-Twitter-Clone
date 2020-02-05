@@ -9,7 +9,7 @@ export const registerUser = (userData, history) => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
-        payload: err.data
+        payload: err.response.data
       })
     );
 };
