@@ -17,6 +17,7 @@ const app = express();
 //activate body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 
 //obtain user info
 app.use("/api/users", users);
