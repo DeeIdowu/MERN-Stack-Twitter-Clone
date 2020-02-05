@@ -5,6 +5,7 @@ mongoose.set("useCreateIndex", true);
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const users = require("./routes/user");
+const passport = require("passport");
 
 //set up environment
 dotenv.config();
@@ -18,6 +19,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
+
+app.use(passport.initialize());
+require("./config/passport")(passport);
 
 //obtain user info
 app.use("/api/users", users);
