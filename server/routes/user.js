@@ -2,6 +2,7 @@ const router = require("express").Router();
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const passport = require("passport");
 
 const validateRegistration = require("../validation/register");
 const validateLogin = require("../validation/login");
@@ -51,7 +52,7 @@ router.route("/login").post((req, res) => {
           const token = jwt.sign(
             { id: user._id },
             "SECRET",
-            { expiresIn: "Id" },
+            { expiresIn: "1d" },
             function(err, token) {
               return res.json({
                 success: true,
@@ -70,5 +71,17 @@ router.route("/login").post((req, res) => {
     }
   });
 });
+
+router
+  .route("/")
+  .get(passport.authenticate("jwt", { session: false }), (req, res) => {
+    res.json({
+      _id: req.user._id,
+      email: req.user.email,
+      username: req.user.username,
+      followers: req.user.followers,
+      following: req.user.following
+    });
+  });
 
 module.exports = router;
