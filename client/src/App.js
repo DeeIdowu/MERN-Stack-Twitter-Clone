@@ -16,6 +16,7 @@ if (localStorage.getItem("jwtToken")) {
   const decode = jwt_decode(localStorage.getItem("jwtToken"));
   if (currentTime > decode.exp) {
     store.dispatch(logoutUser);
+    window.location.href = "/";
   } else {
     setAuthHeader(localStorage.getItem("jwtToken"));
     store.dispatch(getCurrentUser());

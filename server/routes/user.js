@@ -51,7 +51,7 @@ router.route("/login").post((req, res) => {
         if (isMatch) {
           const token = jwt.sign(
             { id: user._id },
-            "SECRET",
+            process.env.SECRET,
             { expiresIn: "1d" },
             function(err, token) {
               return res.json({
