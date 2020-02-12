@@ -1,11 +1,45 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import { getPostsByUserId, getUserProfile } from "../../actions/profileActions";
 import Post from "../Posts/Post";
 import LoadingPosts from "../Posts/LoadingPosts";
 
-const styles = {};
+const styles = {
+  paper: {
+    padding: 10
+  },
+  login: {},
+  email: { color: "#888", marginBottom: 10 },
+  detailsBlock: {
+    display: "flex"
+  },
+  detail: {
+    marginRight: 5,
+    fontWeight: "bold"
+  },
+  detailTitle: {
+    marginLeft: 3,
+    textTransform: "uppercase",
+    fontSize: 10,
+    fontWeight: "normal"
+  },
+  btnBlock: {
+    width: "100%",
+    textAlign: "right"
+  },
+  btnFollow: {
+    backgroundColor: "#ff0000",
+    color: "#fff",
+    "&:hover": {
+      color: "#ff0000",
+      borderColor: "#ff0000",
+      backgroundColor: "#fff"
+    }
+  }
+};
 
 class Profile extends Component {
   constructor(props) {
@@ -28,8 +62,60 @@ class Profile extends Component {
       profile
     } = this.props;
 
-    const items = list && list.map(el => <Post key={el._id} post={el} />);
-    return <div>{loadingPosts ? <LoadingPosts /> : items}</div>;
+    let followBtns;
+    if (auth.isAuthenticated) {
+      if (user.following.indexOf(this.props.match.params.userId) !== -1) {
+        followBtns = (
+          <div className={classes.btnBlock}>
+            <Button variant="outlined" className={classes.btnFollow}>
+              Follow
+            </Button>
+          </div>
+        );
+      } else {
+        followBtns = (
+          <div className={classes.btnBlock}>
+            <Button variant="outlined" className={classes.btnFollow}>
+              Unfollow
+            </Button>
+          </div>
+        );
+      }
+    }
+
+    let items;
+    items = list && list.map(el => <Post key={el._id} post={el} />);
+    let profileInfo;
+    if (profile && items) {
+      profileInfo = (
+        <Paper className={classes.paper}>
+          <h1 className={classes.login}>{profile.login}</h1>
+          <div className={classes.email}>{profile.email}</div>
+          <div className={classes.detailsBlock}>
+            <div className={classes.detail}>
+              {items.length}
+              <span className={classes.detailTitle}>Posts</span>
+            </div>
+            <div className={classes.detail}>
+              {profile.followers.length}
+              <span className={classes.detailTitle}>Followers</span>
+            </div>
+            <div className={classes.detail}>
+              {profile.following.length}
+              <span className={classes.detailTitle}>Following</span>
+            </div>
+            {followBtns}
+          </div>
+        </Paper>
+      );
+    }
+
+    return (
+      <div>
+        {loadingProfile ? <div>Loading</div> : profileInfo}
+        {loadingPosts ? <LoadingPosts /> : items}
+      </div>
+    );
   }
 }
 
