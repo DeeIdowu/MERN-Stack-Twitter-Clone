@@ -4,8 +4,10 @@ const mongoose = require("mongoose");
 mongoose.set("useCreateIndex", true);
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const users = require("./routes/user");
 const passport = require("passport");
+
+const users = require("./routes/user");
+const posts = require("./routes/posts");
 
 //set up environment
 dotenv.config();
@@ -25,6 +27,8 @@ require("./config/passport")(passport);
 
 //obtain user info
 app.use("/api/users", users);
+//obtain user posts
+app.use("/api/posts", posts);
 //run app
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
