@@ -8,7 +8,7 @@ import Home from "../src/components/Home/Home";
 import Login from "../src/components/Auth/Login";
 import Register from "../src/components/Auth/Register";
 import Main from "../src/components/Layout/Main/Main";
-import setAuthheader from "./utils/setAuthHeader";
+import setAuthHeader from "./utils/setAuthHeader";
 import { logoutUser, getCurrentUser } from "./actions/authActions";
 
 if (localStorage.getItem("jwtToken")) {
@@ -17,7 +17,7 @@ if (localStorage.getItem("jwtToken")) {
   if (currentTime > decode.exp) {
     store.dispatch(logoutUser);
   } else {
-    setAuthheader(localStorage.getItem("jwtToken"));
+    setAuthHeader(localStorage.getItem("jwtToken"));
     store.dispatch(getCurrentUser());
   }
 }
