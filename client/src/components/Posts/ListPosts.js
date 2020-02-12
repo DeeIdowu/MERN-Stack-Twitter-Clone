@@ -1,18 +1,32 @@
 import React, { Component } from "react";
 import AddPost from "./AddPost";
 import Post from "./Post";
+import { connect } from "react-redux";
+import { getPosts } from "../../actions/postActions";
+import LoadingPosts from "../Posts/LoadingPosts";
 
 class ListPost extends Component {
+  componentDidMount() {
+    this.props.getPosts();
+  }
+
   render() {
+    const { list, loading } = this.props;
+
+    const items = list && list.map(el => <Post key={el._id} post={el} />);
     return (
       <div>
         <AddPost />
-        <h1>Listo</h1>
-        This is the ListPost Page
+        {loading ? <LoadingPosts /> : items}
         <Post />
       </div>
     );
   }
 }
 
-export default ListPost;
+const mapStateToProps = state => ({
+  list: state.post.list,
+  loading: state.post.loading
+});
+
+export default connect(mapStateToProps, { getPosts })(ListPost);
