@@ -1,12 +1,22 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/icons/CircularProgress";
 
-const styles = {};
+const styles = {
+  load: {
+    textAlign: "center",
+    marginTop: 25,
+    width: "100%"
+  },
+  loadIcon: {
+    color: "#e50000"
+  }
+};
 
 const Loading = ({ classes }) => {
   return (
-    <div>
-      <h1>Loading Posts</h1>
+    <div className={classes.load}>
+      <CircularProgress className={classes.loadicon} />
     </div>
   );
 };
