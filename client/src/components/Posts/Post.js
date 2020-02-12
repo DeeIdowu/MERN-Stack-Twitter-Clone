@@ -31,7 +31,7 @@ class Post extends Component {
         <div
           className={classes.avatar}
           style={{
-            backgroundColor: "#fffbfb"
+            backgroundColor: `#${post.user.id.slice(post.user.id.length * 3)}`
           }}
         />
         <div>

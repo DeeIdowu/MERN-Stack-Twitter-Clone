@@ -7,6 +7,8 @@ import store from "./store";
 import Home from "../src/components/Home/Home";
 import Login from "../src/components/Auth/Login";
 import Register from "../src/components/Auth/Register";
+import Profile from "../src/components/Profile/Profile";
+import NotFound from "../src/components/NotFound";
 import Main from "../src/components/Layout/Main/Main";
 import setAuthHeader from "./utils/setAuthHeader";
 import { logoutUser, getCurrentUser } from "./actions/authActions";
@@ -33,6 +35,8 @@ function App() {
               <Route exact path="/" component={Home} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
+              <Route exact path="/profile/:userId" component={Profile} />
+              <Route component={NotFound} />
             </Switch>
           </Main>
         </BrowserRouter>
