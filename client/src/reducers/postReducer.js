@@ -1,7 +1,7 @@
 import { ADD_POST, LOADING_POSTS } from "../constants";
 
 const initialState = {
-  list: [],
+  list: null,
   loading: false
 };
 
@@ -10,7 +10,7 @@ export default function(state = initialState, action) {
     case "ADD_POST":
       return {
         ...state,
-        list: [...state.list, action.payload]
+        list: [action.payload, ...state.list]
       };
     case "LOADING_POSTS":
       return {
