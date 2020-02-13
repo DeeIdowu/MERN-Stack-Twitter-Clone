@@ -1,4 +1,4 @@
-import { ADD_POST, LOADING_POSTS } from "../constants";
+import { ADD_POST, LOADING_POSTS, GET_POSTS } from "../constants";
 
 const initialState = {
   list: null,

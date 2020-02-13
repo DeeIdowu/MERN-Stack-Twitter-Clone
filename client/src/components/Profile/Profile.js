@@ -3,7 +3,12 @@ import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
-import { getPostsByUserId, getUserProfile } from "../../actions/profileActions";
+import {
+  getPostsByUserId,
+  getUserProfile,
+  followUser,
+  unfollowUser
+} from "../../actions/profileActions";
 import Post from "../Posts/Post";
 import LoadingPosts from "../Posts/LoadingPosts";
 
@@ -51,6 +56,14 @@ class Profile extends Component {
     this.props.getUserProfile(this.props.match.params.userId);
   }
 
+  handleFollow() {
+    this.props.followUser(this.props.match.params.userId);
+  }
+
+  handleUnfollow() {
+    this.props.unfollowUser(this.props.match.params.userId);
+  }
+
   render() {
     const {
       classes,
@@ -67,7 +80,11 @@ class Profile extends Component {
       if (user.following.indexOf(this.props.match.params.userId) !== -1) {
         followBtns = (
           <div className={classes.btnBlock}>
-            <Button variant="outlined" className={classes.btnFollow}>
+            <Button
+              variant="outlined"
+              className={classes.btnFollow}
+              onClick={this.handleFollow}
+            >
               Follow
             </Button>
           </div>
@@ -75,7 +92,11 @@ class Profile extends Component {
       } else {
         followBtns = (
           <div className={classes.btnBlock}>
-            <Button variant="outlined" className={classes.btnFollow}>
+            <Button
+              variant="outlined"
+              className={classes.btnFollow}
+              onClick={this.handleUnfollow}
+            >
               Unfollow
             </Button>
           </div>
@@ -128,6 +149,9 @@ const mapStateToProps = state => ({
   user: state.auth.user
 });
 
-export default connect(mapStateToProps, { getPostsByUserId, getUserProfile })(
-  withStyles(styles)(Profile)
-);
+export default connect(mapStateToProps, {
+  getPostsByUserId,
+  getUserProfile,
+  followUser,
+  unfollowUser
+})(withStyles(styles)(Profile));

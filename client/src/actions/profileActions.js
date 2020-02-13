@@ -3,7 +3,9 @@ import {
   GET_PROFILE,
   LOAD_PROFILE,
   GET_POSTS,
-  LOADING_POSTS
+  LOADING_POSTS,
+  FOLLOW,
+  UNFOLLOW
 } from "../constants";
 
 export const getUserProfile = userId => dispatch => {
@@ -21,6 +23,29 @@ export const getPostsByUserId = userId => dispatch => {
     .then(res =>
       dispatch({
         type: GET_POSTS,
+        payload: res.data
+      })
+    )
+    .catch(err => console.log(err));
+};
+
+export const followUser = userId => dispatch => {
+  axios
+    .post("http://localhost:5000/api/users/follow", { userId })
+    .then(res =>
+      dispatch({
+        type: FOLLOW,
+        payload: res.data
+      })
+    )
+    .catch(err => console.log(err));
+};
+export const unfollowUser = userId => dispatch => {
+  axios
+    .post("http://localhost:5000/api/users/unfollow", { userId })
+    .then(res =>
+      dispatch({
+        type: UNFOLLOW,
         payload: res.data
       })
     )
