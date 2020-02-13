@@ -44,7 +44,7 @@ class Header extends Component {
     this.props.logoutUser();
   }
   render() {
-    const { classes, isAuthenticated } = this.props;
+    const { classes, isAuthenticated, user } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
@@ -81,7 +81,7 @@ class Header extends Component {
         </Menu>
       </div>
     );
-    const authLinks = (
+    const authLinks = isAuthenticated && (
       <div>
         <IconButton
           aria-owns={open ? "menu-appbar" : undefined}
@@ -105,7 +105,9 @@ class Header extends Component {
           anchorEl={anchorEl}
           onClose={this.handleClose}
         >
-          <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+          <MenuItem onClick={this.handleClose}>
+            <Link to={`/profile/${user._id}`}>Profile</Link>
+          </MenuItem>
           <MenuItem onClick={this.handleLogout}>
             <Link to="/#" onClick={this.handleLogout}>
               Logout
@@ -130,7 +132,8 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth
 });
 
 export default connect(mapStateToProps, { logoutUser })(
