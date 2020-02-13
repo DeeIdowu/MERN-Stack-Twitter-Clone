@@ -43,7 +43,7 @@ export const followUser = userId => dispatch => {
     .then(res =>
       dispatch({
         type: FOLLOW,
-        payload: res.data
+        payload: res.data.userId
       })
     )
     .catch(err => console.log(err));
@@ -54,7 +54,7 @@ export const unfollowUser = userId => dispatch => {
     .then(res =>
       dispatch({
         type: UNFOLLOW,
-        payload: res.data
+        payload: res.data.userId
       })
     )
     .catch(err => console.log(err));
