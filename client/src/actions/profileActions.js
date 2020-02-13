@@ -60,6 +60,15 @@ export const unfollowUser = userId => dispatch => {
     .catch(err => console.log(err));
 };
 
+export const searchUser = (searchData, history) => dispatch => {
+  axios
+    .post("http://localhost:5000/api/users/search", searchData)
+    .then(res => {
+      history.push(`/profile/${res.data.userId}`);
+    })
+    .catch(err => console.log(err));
+};
+
 export const loadProfile = () => {
   return {
     type: LOAD_PROFILE

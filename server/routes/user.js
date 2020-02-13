@@ -142,6 +142,14 @@ router
       .catch(err => console.log(err));
   });
 
+router.route("/search").post((req, res) => {
+  User.findOne({
+    $or: [{ email: req.body.text }, { username: req.body.text }]
+  })
+    .then(user => res.json({ userId: user._id }))
+    .catch(err => console.log(err));
+});
+
 router.route("/:id").get((req, res) => {
   User.findById(req.params.id)
     .then(user => {

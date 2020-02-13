@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import InputBase from "@material-ui/core/InputBase";
-import searchIcon from "@material-ui/icons/Search";
+import SearchIcon from "@material-ui/icons/Search";
 import { fade } from "@material-ui/core/styles/colorManipulator";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+
+import { searchUser } from "../../actions/profileActions";
 
 const styles = theme => ({
   search: {
@@ -47,6 +51,21 @@ const styles = theme => ({
 });
 
 class SearchForm extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(e) {
+    const searchData = {
+      text: e.target.value
+    };
+    if (e.key === "Enter") {
+      this.props.searchUser(searchData, this.props.history);
+    }
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -55,15 +74,18 @@ class SearchForm extends Component {
           <SearchIcon />
         </div>
         <InputBase
-          placeholder="What you looking for?"
+          placeholder="Search a user"
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput
           }}
+          onKeyPress={this.handleSubmit}
         />
       </div>
     );
   }
 }
 
-export default withStyles(styles)(SearchForm);
+export default connect(null, { searchUser })(
+  withRouter(withStyles(styles)(SearchForm))
+);
