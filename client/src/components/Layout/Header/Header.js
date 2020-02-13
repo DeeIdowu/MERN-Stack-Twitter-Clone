@@ -7,6 +7,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreVert from "@material-ui/icons/MoreVert";
 import { logoutUser } from "../../../actions/authActions";
+import SearchForm from "../../Search/SearchForm";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
@@ -120,9 +121,10 @@ class Header extends Component {
       <div className={classes.root}>
         <AppBar position="static" style={{ backgroundColor: "#ff0000" }}>
           <Toolbar className={classes.space}>
-            <Link className="logo" to="/">
+            <Link className={classes.logo} to="/">
               NoQuitters
             </Link>
+            <SearchForm />
             {isAuthenticated ? authLinks : guestLinks}
           </Toolbar>
         </AppBar>
