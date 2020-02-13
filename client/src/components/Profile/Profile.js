@@ -49,6 +49,9 @@ const styles = {
 class Profile extends Component {
   constructor(props) {
     super(props);
+
+    this.handleFollow = this.handleFollow.bind(this);
+    this.handleUnfollow = this.handleUnfollow.bind(this);
   }
 
   componentDidMount() {
