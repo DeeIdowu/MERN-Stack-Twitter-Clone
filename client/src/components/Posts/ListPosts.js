@@ -4,7 +4,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import AddPost from "./AddPost";
 import Post from "./Post";
 import { connect } from "react-redux";
-import { getPosts } from "../../actions/postActions";
+import { getPosts, getPostsByFollowingUsers } from "../../actions/postActions";
 import LoadingPosts from "../Posts/LoadingPosts";
 
 class ListPost extends Component {
@@ -17,12 +17,21 @@ class ListPost extends Component {
 
     this.handleChange = this.handleChange.bind(this);
   }
+
+  handleChange(event) {
+    this.setState({ allPosts: event.target.checked });
+  }
+
   componentDidMount() {
     this.props.getPosts();
   }
 
-  handleChange(event) {
-    this.setState({ allPosts: event.target.checked });
+  componentDidUpate(prevProps, prevState) {
+    if (prevState.allPosts !== this.state.allPosts) {
+      this.state.allPosts
+        ? this.props.getPosts()
+        : this.props.getPostsByFollowingUsers();
+    }
   }
 
   render() {
@@ -48,4 +57,6 @@ const mapStateToProps = state => ({
   loading: state.post.loading
 });
 
-export default connect(mapStateToProps, { getPosts })(ListPost);
+export default connect(mapStateToProps, { getPosts, getPostsByFollowingUsers })(
+  ListPost
+);

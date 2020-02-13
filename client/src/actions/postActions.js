@@ -23,6 +23,18 @@ export const getPosts = () => dispatch => {
   );
 };
 
+export const getPostsByFollowingUsers = () => dispatch => {
+  axios
+    .get("http://localhost:5000/api/posts/following")
+    .then(res =>
+      dispatch({
+        type: GET_POSTS,
+        payload: res.data
+      })
+    )
+    .catch(err => console.log(err));
+};
+
 export const loadPosts = () => {
   return {
     type: LOADING_POSTS
