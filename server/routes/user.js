@@ -147,7 +147,7 @@ router.route("/search").post((req, res) => {
     $or: [{ email: req.body.text }, { username: req.body.text }]
   })
     .then(user => res.json({ userId: user._id }))
-    .catch(err => console.log(err));
+    .catch(err => res.status(404).json({ msg: "User not found" }));
 });
 
 router.route("/:id").get((req, res) => {

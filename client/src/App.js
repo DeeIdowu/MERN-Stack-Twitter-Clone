@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import jwt_decode from "jwt-decode";
 import store from "./store";
-
+import SearchUserNotFound from "../src/components/Search/NotFound";
 import Home from "../src/components/Home/Home";
 import Login from "../src/components/Auth/Login";
 import Register from "../src/components/Auth/Register";
@@ -33,9 +33,10 @@ function App() {
           <Main>
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/profile/:userId" component={Profile} />
+              <Route path="/login" component={Login} />
+              <Route path="/register" component={Register} />
+              <Route path="/profile/:userId" component={Profile} />
+              <Route path="/search" component={SearchUserNotFound} />
               <Route component={NotFound} />
             </Switch>
           </Main>
